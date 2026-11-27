@@ -8,6 +8,7 @@ export class Room {
   }
   webSocketMessage(ws, msg) {
     if (typeof msg !== 'string' || msg.length > 600) return;
+    if (msg.includes('"t":"rep"')) { console.log('PLAYER_REPORT', msg); return; }
     if (!ws.deserializeAttachment()) {
       try { const j = JSON.parse(msg); if (j.id) ws.serializeAttachment({ id: String(j.id).slice(0, 12) }); } catch (e) {}
     }
